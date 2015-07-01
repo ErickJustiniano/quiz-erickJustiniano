@@ -10,7 +10,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/quizes/question', quizController.question);
 router.get('/quizes/answer', quizController.answer);
-router.get('/author');
+
+router.get('/author', function(req, res) {
+  res.render('author', { title: 'Erick Alberto Justiniano Caamal' });
 });
 
 module.exports = router;
