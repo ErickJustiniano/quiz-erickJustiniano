@@ -4,3 +4,4 @@ npm_debug.log
 public/stylesheets/author.css
 npm-debug.log
 quiz.sqlite
+.env
