@@ -1,7 +1,7 @@
 var path = require('path');
 
-//Postgres DATABASE_URL = postgres://user:password@host:port/database
-//SQLite   DATABASE_URL = sqllite://:@:/
+//Postgres DATABASE_URL = postgres://user:passwd@host:port/database
+//SQLite   DATABASE_URL = sqlite://:@:/
 var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
 var DB_name = (url[6]||null);
 var user    = (url[2]||null);
@@ -34,7 +34,7 @@ exports.Quiz = Quiz; //Exportar definicion de tabla Quiz
 
 //sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function(){
-	//success(..) ejecuta el manejador una vez creada la tabla
+	//then(..) ejecuta el manejador una vez creada la tabla
 	Quiz.count().then(function(count){
 		if (count === 0) { //La tabla se inicializa solo si está vacía
 			Quiz.create({
@@ -44,6 +44,10 @@ sequelize.sync().then(function(){
 			Quiz.create({
 				pregunta: 'Capital de Portugal',
 				respuesta: 'Lisboa'
+			});
+			Quiz.create({
+				pregunta: 'Nombre de la marca que tiene una manzana mordida',
+				respuesta: 'Apple'
 			})
 			.then(function(){console.log('Base de datos inicializada')});
 		};
