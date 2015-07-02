@@ -48,6 +48,10 @@ sequelize.sync().then(function(){
 			Quiz.create({
 				pregunta: 'Nombre de la marca que tiene una manzana mordida',
 				respuesta: 'Apple'
+			});
+			Quiz.create({
+				pregunta: 'De que color es el caballo blanco de napoleon',
+				respuesta: 'Blanco'
 			})
 			.then(function(){console.log('Base de datos inicializada')});
 		};
