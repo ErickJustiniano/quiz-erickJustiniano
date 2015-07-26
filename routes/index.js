@@ -20,7 +20,7 @@ router.post('/quizes/create', quizController.create);
 
 //Definicion de rutas de ejercicios
 router.get('/author', function(req, res, next) {
-  res.render('author', { nombre: 'Erick Alberto Justiniano Caamal' });
+  res.render('author', { nombre: 'Erick Alberto Justiniano Caamal', errors: [] });
 });
 
 module.exports = router;

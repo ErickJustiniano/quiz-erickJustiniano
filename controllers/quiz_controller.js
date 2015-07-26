@@ -57,7 +57,7 @@ exports.create = function(req, res) {
 
  	quiz.validate().then(function(err){
  		if (err) {
- 			res.render('/quizes/new', {quiz: quiz, errors: err.errors});
+ 			res.render('quizes/new', {quiz: quiz, errors: err.errors});
  		} else {
  			quiz
  			.save({fields: ["pregunta", "respuesta"]})
