@@ -16,7 +16,7 @@ router.get('/quizes', quizController.index);
 router.get('/quizes/:quizId(\\d+)', quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 router.get('/quizes/new', quizController.new);
-router.get('/quizes/create', quizController.create);
+router.post('/quizes/create', quizController.create);
 
 //Definicion de rutas de ejercicios
 router.get('/author', function(req, res, next) {
