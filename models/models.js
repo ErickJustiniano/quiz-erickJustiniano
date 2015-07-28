@@ -38,20 +38,14 @@ sequelize.sync().then(function(){
 	Quiz.count().then(function(count){
 		if (count === 0) { //La tabla se inicializa solo si está vacía
 			Quiz.create({
-				pregunta: 'Capital de Italia',
-				respuesta: 'Roma'
+				pregunta: 	'Capital de Italia',
+				respuesta: 	'Roma',
+				tematica: 	'Humanidades'
 			});
 			Quiz.create({
-				pregunta: 'Capital de Portugal',
-				respuesta: 'Lisboa'
-			});
-			Quiz.create({
-				pregunta: 'Nombre de la marca que tiene una manzana mordida',
-				respuesta: 'Apple'
-			});
-			Quiz.create({
-				pregunta: 'De que color es el caballo blanco de napoleon',
-				respuesta: 'Blanco'
+				pregunta: 	'Capital de Portugal',
+				respuesta: 	'Lisboa',
+				tematica: 	'Humanidades'
 			})
 			.then(function(){console.log('Base de datos inicializada')});
 		};
