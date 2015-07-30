@@ -11,26 +11,28 @@ router.get('/', function(req, res, next) {
 });
 
 //Autoload de comandos con :quizId
-router.param('quizId', quizController.load);	//autoload :quizId
+router.param('quizId', 		quizController.load);	//autoload :quizId
+router.param('commentId', 	commentController.load);//autoload :commentId
 
 //Definicion de las rutas de session
-router.get('/login', 							 sessionController.new); 	//Formulario de login
-router.post('/login',							 sessionController.create); //Crear sesion
-router.get('/logout',							 sessionController.destroy);//Destruir sesion
+router.get('/login',	sessionController.new); 	//Formulario de login
+router.post('/login',	sessionController.create); //Crear sesion
+router.get('/logout',	sessionController.destroy);//Destruir sesion
 
 //Definicion de la rutas de /quizes
 router.get('/quizes', quizController.index);
-router.get('/quizes/:quizId(\\d+)', 			 quizController.show);
-router.get('/quizes/:quizId(\\d+)/answer', 		 quizController.answer);
-router.get('/quizes/new', 						 sessionController.loginRequired, quizController.new);
-router.post('/quizes/create', 					 sessionController.loginRequired, quizController.create);
-router.get('/quizes/:quizId(\\d+)/edit', 		 sessionController.loginRequired, quizController.edit);
-router.put('/quizes/:quizId(\\d+)', 			 sessionController.loginRequired, quizController.update);
-router.delete('/quizes/:quizId(\\d+)', 			 sessionController.loginRequired, quizController.destroy);
+router.get('/quizes/:quizId(\\d+)',			quizController.show);
+router.get('/quizes/:quizId(\\d+)/answer', 	quizController.answer);
+router.get('/quizes/new', 					sessionController.loginRequired, quizController.new);
+router.post('/quizes/create', 				sessionController.loginRequired, quizController.create);
+router.get('/quizes/:quizId(\\d+)/edit', 	sessionController.loginRequired, quizController.edit);
+router.put('/quizes/:quizId(\\d+)', 		sessionController.loginRequired, quizController.update);
+router.delete('/quizes/:quizId(\\d+)', 		sessionController.loginRequired, quizController.destroy);
 
 //Definicion de las rutas de comentarios
-router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
-router.post('/quizes/:quizId(\\d+)/comments',	 commentController.create);
+router.get('/quizes/:quizId(\\d+)/comments/new',	commentController.new);
+router.post('/quizes/:quizId(\\d+)/comments',	 	commentController.create);
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
 
 //Definicion de rutas de ejercicios
 router.get('/author', function(req, res, next) {
