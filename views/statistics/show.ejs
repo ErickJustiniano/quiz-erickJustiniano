@@ -1,6 +1,23 @@
-<p><i>Número de preguntas:</i><b> <%= statistics.n_preguntas %></b></p>
-<p><i>Número de comentarios totales:</i><b> <%= statistics.n_comentarios %></b></p>
-<p><i>Número medio de comentarios por pregunta:</i><b> <%= statistics.promedio_comentarios%></b></p>
-<p><i>Número de preguntas sin comentarios:</i><b> <%= statistics.preg_sin_com %></b></p>
-<p><i>Número de preguntas con comentarios:</i><b> <%= statistics.preg_con_com %></b></p>
-<p><i>Número de comentarios no publicados:</i><b> <%= statistics.comentarios_no_pub %></b></p>
+<h2> Estadísticas </h2>
+
+<p>
+	<i>Número de preguntas:</i><b> <%= statsData.quizes %></b>
+</p>
+<p>
+	<i>Número de comentarios totales:</i><b> <%= statsData.comments %></b>
+</p>
+<p>
+	<i>Número medio de comentarios por pregunta:</i><b> <%= statsData.quizes?(statsData.comments / statsData.quizes).toFixed(2):0 %></b>
+</p>
+<p>
+	<i>Número de preguntas sin comentarios:</i><b> <%= statsData.quizes - statsData.commentedQuizes %></b>
+</p>
+<p>
+	<i>Número de preguntas con comentarios:</i><b> <%= statsData.commentedQuizes %></b>
+</p>
+<p>
+	<i>Comentarios publicados:</i><b> <%= statsData.publishedComments %></b>
+</p>
+<p>
+	<i>Comentarios sin publicar:</i><b> <%= statsData.comments - statsData.publishedComments %></b>
+</p>

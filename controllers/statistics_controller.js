@@ -1,28 +1,36 @@
 var models = require('../models/models.js');
+var Sequelize = require('sequelize');
+
+var statsData = {};
+
+exports.obtainData = function(req, res, next) {
+//Se ha usado el método all de Promises (implementado ya en sequelize), ya que
+//de esta forma se ejecutan las consultas asíncronamente en paralelo y se
+//continúa cuando han acabado todas.
+    Sequelize.Promise.all([
+        models.Quiz.count(),
+        models.Comment.count(),
+//Se ha añadido nuevos métodos al modelo Comment en models/comment.js
+//Para ello se han seguido las instucciones de la documentación de sequelize:
+//http://docs.sequelizejs.com/en/latest/docs/models-definition/#expansion-of-models
+        models.Comment.countDistinctQuizId(),
+        models.Comment.countPublished()
+    ]).then( function( values ){
+        statsData.quizes=values[0];
+        statsData.comments=values[1];
+        statsData.commentedQuizes=values[2];
+        statsData.publishedComments=values[3];
+    }).catch( function (err) {
+        next(err);
+    }).finally( function() {
+        next();
+    });
+};
 
 // GET /quizes/statistics
-exports.show = function(req, res){
-    var statistics={ n_preguntas: ' -- ',
-	 	n_comentarios: ' -- ',
-    	promedio_comentarios: ' -- ',
-    	preg_sin_com: ' -- ',
-    	preg_con_com: ' -- ',
-    	comentarios_no_pub: '--'
-    };
-	
-	models.sequelize.query('SELECT count(*) AS n FROM "Quizzes"').then(function(cuenta) {//nº de preguntas
- 		statistics.n_preguntas=cuenta[0].n;
-		models.sequelize.query('SELECT count(*) AS n FROM "Comments"').then(function(cuenta) {//nº de comentarios
- 			statistics.n_comentarios=cuenta[0].n;
- 			if(+statistics.n_preguntas>0) statistics.promedio_comentarios=cuenta[0].n/statistics.n_preguntas;//si es 0 el número de preguntas no está definido
-			models.sequelize.query('SELECT count(*) AS n FROM "Quizzes" WHERE "id" IN (SELECT DISTINCT "QuizId" FROM "Comments")').then(function(cuenta) {//nº de preguntas con comentario
- 				statistics.preg_con_com=cuenta[0].n;
- 				statistics.preg_sin_com=+statistics.n_preguntas-cuenta[0].n;
-				models.sequelize.query('SELECT count(*) AS n FROM "Comments" WHERE NOT "publicado"').then(function(cuenta) {//nº de comentarios no publicados
- 					statistics.comentarios_no_pub=cuenta[0].n;
- 					res.render('statistics/show.ejs', {statistics: statistics, errors: []});
-				});
-			});
-		});
-  	});
+exports.show = function(req, res) {
+    res.render('statistics/show', {
+        statsData: statsData,
+        errors: []
+    });
 };
